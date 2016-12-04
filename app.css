@@ -1,0 +1,30 @@
+html,
+body {
+  height: 100%;
+  margin: 0
+}
+
+.box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.box .header {
+  flex: 0 1 auto;
+}
+
+.box .content {
+  flex: 1 1 auto;
+  display: none;
+}
+
+.box .content.active {
+  display: flex;
+}
+
+a.active {
+  background-color: #5555ff;
+  color: white;
+}
+

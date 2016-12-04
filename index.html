@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="./app.css" rel="stylesheet">
+</head>
+<body>
+<div class="box">
+    <div class="header">
+        <a class="active" id="link1" href="javascript:tab(1)">AWS1</a>
+        <a id="link2" href="javascript:tab(2)">AWS2</a>
+        <a id="link3" href="javascript:tab(3)">AWS3</a>
+    </div>
+    <webview id="webview1" partition="persist:aws1" class="content active" src="https://console.aws.amazon.com/console/home?region=ap-northeast-1"></webview>
+    <webview id="webview2" partition="persist:aws2" class="content" src="https://XXXXXXXXXXXX.signin.aws.amazon.com/console"></webview>
+    <webview id="webview3" partition="persist:aws3" class="content" src="https://YYYYYYYYYYYY.signin.aws.amazon.com/console"></webview>
+</div>
+
+<script type="text/javascript">
+  var currentTab = 1
+  function tab(num) {
+    if(currentTab == num) {
+      return;
+    }
+    hide(currentTab);
+    currentTab = num;
+    show(currentTab);
+  }
+  function show(num) {
+    document.getElementById("webview" + currentTab).classList.add("active");
+    document.getElementById("link" + currentTab).classList.add("active");
+  }
+  function hide(elm) {
+    document.getElementById("webview" + currentTab).classList.remove("active");
+    document.getElementById("link" + currentTab).classList.remove("active");
+  }
+
+  const ipc = require('electron').ipcRenderer;
+  ipc.on('reloadCurrentService', function(e) {
+    var tab = document.getElementById("webview" + currentTab);
+    tab.reload();
+  });
+</script>
+</body>
+</html>
